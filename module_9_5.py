@@ -14,8 +14,8 @@ class Iterator:
         return self
 
     def __next__(self):
-        if self.step == 0:
-            raise StepValueError("Шаг не может быть равен 0")
+        if self.step == 0 or (self.step < 0 and (self.start >= self.stop and self.start < self.stop + self.step)):
+            raise StepValueError("Шаг не может быть равен 0 или отрицательным и меньше нуля при start >= stop")
         elif self.pointer > self.stop:
             raise StopIteration
         else:
@@ -33,7 +33,6 @@ except StepValueError:
 iter2 = Iterator(-5, 1)
 iter3 = Iterator(6, 15, 2)
 iter4 = Iterator(5, 1, -1)
-iter5 = Iterator(10, 1)
 
 for i in iter2:
     print(i, end=' ')
@@ -42,8 +41,5 @@ for i in iter3:
     print(i, end=' ')
 print()
 for i in iter4:
-    print(i, end=' ')
-print()
-for i in iter5:
     print(i, end=' ')
 print()
